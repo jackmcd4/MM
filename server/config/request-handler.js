@@ -1,6 +1,6 @@
 module.exports = {
 	renderLoad : function(req, res){
-		res.send(200, {});
+		res.send(200);
 	},
 
 	renderGallery : function(){

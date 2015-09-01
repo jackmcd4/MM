@@ -8,7 +8,7 @@ angular.module('app', [
 .config(function($routeProvider, $httpProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'app/load/load.html',
+      templateUrl: '../index.html',
       controller: 'LoadController'
     })
     .when('/gallery', {
