@@ -1,29 +1,50 @@
-angular.module('app', [
-  'app.load',
-  'app.gallery',
-  'app.about',
-  'app.contact',
-  'ngRoute'
-])
-.config(function($routeProvider, $httpProvider) {
+var app = angular.module('app', ['ngRoute', 'app.about', 'app.gallery', 'app.contact']);
+app.config(function($routeProvider){
+  console.log("argh")
   $routeProvider
-    .when('/', {
-      templateUrl: '../index.html',
-      controller: 'LoadController'
+    .when('/about', {
+      templateUrl : 'app/about/about.html',
+      controller : 'AboutController'
     })
     .when('/gallery', {
-      templateUrl: 'app/gallery/gallery.html',
-      controller: 'GalleryController'
-    })
-    .when('/about', {
-      templateUrl: 'app/about/about.html',
-      controller: 'AboutController'
+      templateUrl : 'app/gallery/gallery.html',
+      controller : 'GalleryController'
     })
     .when('/contact', {
-      templateUrl: 'app/contact/contact.html',
-      controller: 'ContactController'
+      templateUrl : 'app/contact/contact.html',
+      controller : 'ContactController'
     })
     .otherwise({
-        redirectTo: '/gallery'
-    })
-})
+      redirectTo: '/'
+    });
+});
+
+// var app = angular.module('app', ['app.gallery', 'app.about', 'app.contact', 'ui.router'])
+// .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+//   $urlRouterProvider.otherwise('gallery');
+
+//   $stateProvider
+//     .state('index', {
+//       name: 'index',
+//       url: '/',
+//       templateUrl: 'index.html',
+//     })
+//     .state('gallery', {
+//       name: 'gallery',
+//       url: '/gallery',
+//       templateUrl: 'app/gallery/gallery.html',
+//       controller: 'GalleryController'
+//     })
+//     .state('about', {
+//       name: 'about',
+//       url: '/about',
+//       templateUrl: 'app/about/about.html',
+//       controller: 'AboutController'
+//     })
+//     .state('contact', {
+//       name: 'contact',
+//       url: '/contact',
+//       templateUrl: 'app/contact/contact.html',
+//       controller: 'ContactController'
+//     })
+// }]);
