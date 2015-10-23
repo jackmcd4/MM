@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '/../../client/')));
 app.use('/node_modules', express.static(path.join(__dirname, '/../../node_modules/')));
-
+app.use('/images', express.static(path.join(__dirname, '/../../client/images/')));
 // require('./middleware.js')(app);
 // app.get('/', handler.renderLoad);
 // app.get('/gallery', handler.renderGallery);

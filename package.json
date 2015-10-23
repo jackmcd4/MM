@@ -20,8 +20,6 @@
     "angular": "^1.4.5",
     "angular-route": "^1.4.7",
     "angular-ui-router": "^0.2.15",
-    "body-parser": "^1.13.3",
-    "express": "^4.13.3",
-    "method-override": "^2.3.5"
+    "express": "^4.13.3"
   }
 }
