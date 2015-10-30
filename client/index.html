@@ -3,13 +3,29 @@
   <head>
     <meta charset="utf-8" />
     <title>MM</title>
+    <!--My Stylesheet -->
     <link rel="stylesheet" type="text/css" href="styles/style.css"/>
-    <script src="../node_modules/angular/angular.min.js"></script>
-    <!--script src=
-    "../node_modules/angular-ui-router/build/angular-ui-router.min.js">
-    </script-->
-    <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
+    
+
+    <!--Angular-->
+    <script data-require="angular.js@*" data-semver="1.4.1" src="https://code.angularjs.org/1.4.1/angular.js"></script>
+    <!--Angular Route-->
     <script src="../node_modules/angular-route/angular-route.min.js"></script>  
+    <!--Angular UI Bootstrap-->
+    <script src="../node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <!--Angular Animate-->
+    <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
+    <!--Lightbox JS-->
+    <script src="../node_modules/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js"></script>
+    <!--Lightbox CSS-->
+    <link rel="stylesheet" href="../node_modules/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css" />
+    <!--script src="../node_modules/angular/angular.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.min.js"></script>
+    <script src="../node_modules/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.min.css"/-->
+
+
     <!-- Firebase -->
     <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
     <!-- AngularFire -->
@@ -24,6 +40,24 @@
       </ul>
     </nav>
     <div ng-view></div>
+    <script type="text/ng-template" id="modal.html">
+      '<div class="modal-body"
+          ng-swipe-left="Lightbox.nextImage()"
+          ng-swipe-right="Lightbox.prevImage()">
+
+        <!-- image -->
+        <div class="lightbox-image-container">
+          <img lightbox-src="{{Lightbox.imageUrl}}">
+        </div>
+
+        <!-- caption -->
+        <div class="alert alert-info" style="margin: 1em 0 0;">
+          This is a custom template where weve removed the top nav and added a Bootstrap alert box. It makes the modal taller and so we have changed its height calculation.<br>
+          Also, the maximum display height of the image has been increased to 1600 (instead of being dependent on the window height), thus vertical scrolling is now possible.
+        </div>
+
+      </div>'
+    </script>
     <!-- <div class="container"></div> -->
     <script src="app/app.js"></script>
     <script src="app/gallery/gallery.js"></script>
