@@ -1,6 +1,41 @@
-angular.module('app.gallery', [])
-.controller('GalleryController', function($scope){
+angular.module('app.gallery', ['bootstrapLightbox']).config(function (LightboxProvider) {
+  // set a custom template
+  LightboxProvider.templateUrl = 'modal.html';
+
+  // set the caption of each image as its text color
+  // LightboxProvider.getImageCaption = function (imageUrl) {
+  //   return '#' + imageUrl.match(/00\/(\w+)/)[1];
+  // };
+
+  // increase the maximum display height of the image
+  LightboxProvider.calculateImageDimensionLimits = function (dimensions) {
+    return {
+      'maxWidth': dimensions.windowWidth >= 768 ? // default
+        dimensions.windowWidth - 92 :
+        dimensions.windowWidth - 52,
+      'maxHeight': 1600                           // custom
+    };
+  };
+
+  // the modal height calculation has to be changed since our custom template is
+  // taller than the default template
+  LightboxProvider.calculateModalDimensions = function (dimensions) {
+    var width = Math.max(400, dimensions.imageDisplayWidth + 32);
+
+    if (width >= dimensions.windowWidth - 20 || dimensions.windowWidth < 768) {
+      width = 'auto';
+    }
+
+    return {
+      'width': width,                             // default
+      'height': 'auto'                            // custom
+    };
+  };
+});
+
+angular.module('app.gallery').controller('GalleryController', function($scope, Lightbox){
 	console.log("inside gallery controller");
+	$scope.lightbox = Lightbox;
 	$scope.photos = [ { src: '../../images/lamps/short/bowl_black.jpg',
     desc: { lamps: true, black: true, bowl: true, 'short': true } },
   { src: '../../images/lamps/short/bowl_black_base.jpg',
@@ -134,37 +169,52 @@ angular.module('app.gallery', [])
   { src: '../../images/tables/side_marble_top.jpg',
     desc: { tables: true, marble: true, top: true, side: true } } ]
 
-    function startOverlay(overlayLink) {
-			document.body.innerHTML += '<div class="overlay"></div><div class="lightbox"></div>';
-			var element = document.querySelector('.lightbox');
-			element.style.top = "50%";
-			element.style.left = "50%";
-			element.style.width = '200px';
-			element.style.height = '200px';
-			element.style["margin-top"] = '-100px';
-			element.style["margin-left"] = '-100px';
-			// element.appendChild('<img ng-src="{{'+overlayLink+'}}>');
-			// overlayLink = "{{"+overlayLink+"}}";
-			var image = document.createElement("img");
-			image.setAttribute("src", overlayLink);
-			image.setAttribute("width", "200px");
-			image.setAttribute("height", "200px");
-			element.appendChild(image);
-			console.log("this is element", element);
-			console.log("this is IMAGE", element.innerHTML);
-    	debugger;
-		}
 
-    $scope.setMaster = function(obj, $event){
-    	console.log(obj.target.src)
-    	console.log(obj.target);
-    	// obj.target.classList.toggle('show');
-    	var curr = obj.target.src;
-    	curr = "../.." + curr.slice(21);
-    	console.log(curr);	
-    	startOverlay(curr)
-    
-  	}
+  $scope.openLightboxModal = function (obj, $event) {
+    console.log(obj.target.src)
+    console.log(obj.target);
+  	var curr = obj.target.src;
+  	curr = "../.." + curr.slice(21);
+  	console.log(curr);	
+    Lightbox.openModal([curr], 0);
+  };
+
+
+   // $scope.setMaster = function(obj, $event){
+   //  	console.log(obj.target.src)
+   //  	console.log(obj.target);
+   //  	// obj.target.classList.toggle('show');
+   //  	var curr = obj.target.src;
+   //  	curr = "../.." + curr.slice(21);
+   //  	console.log(curr);	
+   //  	startOverlay(curr);
+  	// }
+
+  //   function startOverlay(overlayLink) {
+		// 	document.body.innerHTML += '<div class="overlay"></div><div class="lightbox"></div>';
+		// 	var element = document.querySelector('.lightbox');
+		// 	var backdrop = document.querySelector('.overlay');
+		// 	var image = document.createElement("img");
+		// 	var gal = document.querySelector('container');
+		// 	image.setAttribute("src", overlayLink);
+		// 	// backdrop.setAttribute("ng-animate", "animate");
+		// 	backdrop.setAttribute("ng-click", "clearImage($event)");			
+		// 	var w = image.width;
+		// 	var h = image.height;
+		// 	element.style.top = "50%";
+		// 	element.style.left = "50%";
+		// 	element.style.width = w;
+		// 	element.style.height = h;
+		// 	element.style["margin-right"] = "auto";
+		// 	element.style["margin-left"] = "auto";
+		// 	image.setAttribute("width", w);
+		// 	image.setAttribute("height", h);
+		// 	element.appendChild(image);
+		// }
+
+  // 	$scope.clearImage = function() {
+  // 		console.log("closing now");
+  // 	}
 });
 
 

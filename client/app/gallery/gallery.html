@@ -2,8 +2,10 @@
 Hello, this is the gallery!
 </div>
 <input type="search" ng-model="q" placeholder="filter images..." aria-label="filter photos" />
-<div class="container">
-	<div ng-repeat="photo in photos | filter:q as results">
-		<img ng-src="{{photo.src}}" class="pics" ng-click="setMaster($event)">
-	</div>
-</div>
+
+<ul class="gallery" ng-controller="GalleryController">
+	<li ng-repeat="photo in photos | filter:q as results">
+		<a ng-click="openLightboxModal($event)">
+		<img ng-src="{{photo.src}}" class="img-circle">
+	</li>
+</ul>
