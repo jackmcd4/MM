@@ -3,9 +3,29 @@ Hello, this is the gallery!
 </div>
 <input type="search" ng-model="q" placeholder="filter images..." aria-label="filter photos" />
 
-<ul class="gallery" ng-controller="GalleryController">
-	<li ng-repeat="photo in photos | filter:q as results">
+<div class="gallery" ng-controller="GalleryController">
+	<div ng-repeat="photo in photos | filter:q as results">
+		<a ng-click="toggleModal($event)">
+		<img ng-src="{{photo.src}}">
+	</div>
+	<modal-dialog show='modalShown' style="overflow-y: scroll;">
+		<img src="{{curr}}">
+		<p>{{desc}}</p>
+	</modal-dialog>
+</div>
+
+
+<!-- 
+<div class="gallery" ng-controller="GalleryController">
+	<div ng-repeat="photo in photos | filter:q as results">
 		<a ng-click="openLightboxModal($event)">
 		<img ng-src="{{photo.src}}" class="img-circle">
-	</li>
-</ul>
+	</div>
+</div> -->
+
+<!-- 
+
+<button ng-click='toggleModal()'>Open Modal Dialog</button>
+<modal-dialog show='modalShown' width='750px' height='60%'>
+  <p>Modal Content Goes here<p>
+</modal-dialog> -->
