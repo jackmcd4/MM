@@ -1,4 +1,4 @@
-var app = angular.module('app', ['firebase', 'ngRoute', 'app.about', 'app.gallery', 'app.contact', 'ui.bootstrap', 'bootstrapLightbox']);
+var app = angular.module('app', ['firebase', 'ngRoute', 'app.about', 'app.gallery', 'ngAnimate', /*'wu.masonry', */'app.contact', 'ui.bootstrap']);
 app.config(function($routeProvider){
   console.log("argh")
   $routeProvider
