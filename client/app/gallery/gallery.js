@@ -1,41 +1,41 @@
-angular.module('app.gallery', ['bootstrapLightbox']).config(function (LightboxProvider) {
-  // set a custom template
-  LightboxProvider.templateUrl = 'modal.html';
+angular.module('app.gallery', []).controller('GalleryController', function($scope, $window) {
+	console.log("inside gallery controller");
 
-  // set the caption of each image as its text color
-  // LightboxProvider.getImageCaption = function (imageUrl) {
-  //   return '#' + imageUrl.match(/00\/(\w+)/)[1];
+	$scope.modalShown = false;
+	$scope.w = '';
+	$scope.h = '';
+	$scope.scrollHeight = '';
+	$scope.curr;
+	$scope.desc = "lorem ipsum, blach blah blah";
+	var lightbox;
+	$scope.toggleModal = function(obj, event) {
+		$scope.curr = "../../" + obj.target.src.slice(21);
+		console.log($scope.scrollHeight);
+		var lightbox = document.body.querySelector('.ng-modal-dialog-content');
+		$scope.w = obj.target.width;
+		$scope.h = obj.target.height;
+		lightbox.setAttribute("width", $scope.w);
+		lightbox.setAttribute("height", $scope.h);		
+		// console.log($scope.w, $scope.h);
+    $scope.modalShown = !$scope.modalShown;
+  };
+
+  	document.onkeypress = function (e) {
+      e = e || window.event;
+      if(e.keyCode === 27) {
+      	console.log("in")
+      	// $scope.modalShown = false;
+      }
+  	};
+  // $scope.openLightboxModal = function (obj, $event) {
+  //   console.log(obj.target.src)
+  //   console.log(obj.target);
+  // 	var curr = obj.target.src;
+  // 	curr = "../.." + curr.slice(21);
+  // 	console.log(curr);	
+  //   // .openModal([curr], 0);
   // };
 
-  // increase the maximum display height of the image
-  LightboxProvider.calculateImageDimensionLimits = function (dimensions) {
-    return {
-      'maxWidth': dimensions.windowWidth >= 768 ? // default
-        dimensions.windowWidth - 92 :
-        dimensions.windowWidth - 52,
-      'maxHeight': 1600                           // custom
-    };
-  };
-
-  // the modal height calculation has to be changed since our custom template is
-  // taller than the default template
-  LightboxProvider.calculateModalDimensions = function (dimensions) {
-    var width = Math.max(400, dimensions.imageDisplayWidth + 32);
-
-    if (width >= dimensions.windowWidth - 20 || dimensions.windowWidth < 768) {
-      width = 'auto';
-    }
-
-    return {
-      'width': width,                             // default
-      'height': 'auto'                            // custom
-    };
-  };
-});
-
-angular.module('app.gallery').controller('GalleryController', function($scope, Lightbox){
-	console.log("inside gallery controller");
-	$scope.lightbox = Lightbox;
 	$scope.photos = [ { src: '../../images/lamps/short/bowl_black.jpg',
     desc: { lamps: true, black: true, bowl: true, 'short': true } },
   { src: '../../images/lamps/short/bowl_black_base.jpg',
@@ -170,16 +170,6 @@ angular.module('app.gallery').controller('GalleryController', function($scope, L
     desc: { tables: true, marble: true, top: true, side: true } } ]
 
 
-  $scope.openLightboxModal = function (obj, $event) {
-    console.log(obj.target.src)
-    console.log(obj.target);
-  	var curr = obj.target.src;
-  	curr = "../.." + curr.slice(21);
-  	console.log(curr);	
-    Lightbox.openModal([curr], 0);
-  };
-
-
    // $scope.setMaster = function(obj, $event){
    //  	console.log(obj.target.src)
    //  	console.log(obj.target);
@@ -218,3 +208,26 @@ angular.module('app.gallery').controller('GalleryController', function($scope, L
 });
 
 
+angular.module('app.gallery').directive('modalDialog', function() {
+	return {
+		restrict : 'E',
+		scope : {
+			show : '='
+		},
+		replace : true,
+		transclude : true,
+		link : function(scope, element, attrs) {
+			scope.dialogStyle = {};
+			// if (attrs.width) {
+	  //     scope.dialogStyle.width = attrs.width;
+	  //   }
+	  //   if (attrs.height) {
+	  //     scope.dialogStyle.height = attrs.height;
+	  //   }
+	    scope.hideModal = function() {
+	      scope.show = false;
+	    };
+		},
+		template: "<div class='ng-modal' ng-show='show'><div class='ng-modal-overlay' ng-click='hideModal()' ></div><div class='ng-modal-dialog' ng-style='dialogStyle'><div class='ng-modal-close' ng-click='hideModal()'>X</div><div class='ng-modal-dialog-content' ng-transclude></div></div></div>"
+	};
+});
